@@ -25,6 +25,33 @@ QueryPilot 面向结构化数据库，将业务人员的自然语言问题转换
 
 当前版本限定为单数据库执行，多数据库任务拆分和结果合并尚未启用。
 
+## 核心架构与工作流
+
+![QueryPilot 系统架构](docs/assets/system-architecture.png)
+
+![QueryPilot 查询工作流](docs/assets/query-workflow.png)
+
+请求链路为：**Vue 工作台 → FastAPI 接口 → 服务层 → 查询工作流 → 意图路由**。普通问答会进入直接回复或已有结果分析；新数据查询则继续经过结构检索、表关系构建、单库智能体、本地 MCP 工具、SQL 语法树与权限校验、数据库执行和结果展示。
+
+| 层级 | 核心模块 | 主要责任 |
+|---|---|---|
+| 交互层 | `frontend/src/App.vue`、`api.ts` | 登录、对话、Schema 浏览、澄清、结果表和导出 |
+| API 层 | `backend/app/api/routes.py` | HTTP 接口、认证依赖、请求与响应模型 |
+| 服务层 | `backend/app/services/askdata_service.py` | 用户隔离、会话、工作区、归档和工作流调用 |
+| 编排层 | `backend/app/workflows/query_graph.py` | 路由、检索、澄清、执行和结束状态转换 |
+| 知识层 | `backend/app/retrieval/service.py`、`graph.py` | 字段召回、融合重排和表关系补全 |
+| Agent 层 | `backend/app/querying/single_database_agent.py`、`skills/` | 决定澄清或调用允许的数据库工具 |
+| 工具执行层 | `backend/app/mcp_runtime/`、`duckdb_engine.py` | 工具注册、SQL 校验和查询执行 |
+| 安全与状态层 | `backend/app/security/`、`services/*memory*` | 认证、表权限、短期上下文和可选保存记忆 |
+
+### 工作流状态
+
+1. **预处理**：规范化问题，判断是普通回复、已有结果解读，还是全新数据查询。
+2. **检索结构**：通过关键词/语义检索、排名融合和重排序定位相关字段与表。
+3. **构建上下文**：构建表间关系，并把受控的结构上下文交给单库智能体。
+4. **澄清或执行**：信息不足时追问；信息完整时生成只读查询并调用已注册工具。
+5. **校验与呈现**：依次执行 SQL 语法树、单语句、表访问权限和危险操作校验，查询后返回表格、SQL 和说明。
+
 ## 运行完整本地应用
 
 ### 启动后端

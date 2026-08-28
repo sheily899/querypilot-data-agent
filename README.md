@@ -25,6 +25,33 @@ The screenshots show the QueryPilot workbench and query result view. The full ap
 
 The current application is intentionally limited to single-database execution. Multi-database task splitting and result merging are not enabled.
 
+## Core architecture and workflow
+
+![QueryPilot system architecture](docs/assets/system-architecture.png)
+
+![QueryPilot query workflow](docs/assets/query-workflow.png)
+
+The request path is: **Vue workbench → FastAPI API → service layer → query workflow → route selection**. A normal response ends at a direct answer or saved-result analysis. A new data request continues through schema retrieval, schema relationships, the single-database agent, local MCP runtime, SQL AST and permission checks, database execution, and result presentation.
+
+| Layer | Main modules | Responsibility |
+|---|---|---|
+| Interaction | `frontend/src/App.vue`, `api.ts` | Login, conversation, schema browsing, clarification, result table and export |
+| API | `backend/app/api/routes.py` | HTTP endpoints, authentication dependencies, request/response models |
+| Service | `backend/app/services/askdata_service.py` | User isolation, sessions, workspaces, archives and workflow invocation |
+| Orchestration | `backend/app/workflows/query_graph.py` | Routing, retrieval, clarification, execution and terminal states |
+| Knowledge | `backend/app/retrieval/service.py`, `graph.py` | Field retrieval, rank fusion, reranking and relationship completion |
+| Agent | `backend/app/querying/single_database_agent.py`, `skills/` | Decide whether to clarify or call an allowed database tool |
+| Tool execution | `backend/app/mcp_runtime/`, `duckdb_engine.py` | Tool registration, SQL validation and query execution |
+| Security and state | `backend/app/security/`, `services/*memory*` | Authentication, table permissions, short-term context and optional saved memory |
+
+### Workflow states
+
+1. **Preprocess** — normalize the request and determine whether it is a direct answer, an existing-result question, or a new data query.
+2. **Retrieve schema** — identify relevant fields and tables using keyword/semantic retrieval, rank fusion and reranking.
+3. **Build context** — construct table relationships and provide the bounded schema context to the single-database agent.
+4. **Clarify or execute** — ask for missing business conditions, or generate a read-only SQL statement and call the registered tool.
+5. **Validate and present** — apply SQL AST, statement, table-access and dangerous-operation checks, execute the query, then return the table, SQL and explanation.
+
 ## Run the full local application
 
 ### Backend
