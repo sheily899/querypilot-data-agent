@@ -4,15 +4,15 @@
 
 QueryPilot 面向结构化数据库，将业务人员的自然语言问题转换为只读查询，并通过网页工作台展示结果。
 
-## 先体验离线演示
+## 产品截图
 
-无需模型密钥、数据库或网络：[打开可交互的离线 Demo](https://htmlpreview.github.io/?https://github.com/sheily899/querypilot-data-agent/blob/main/demo/index.html)，也可以下载仓库后直接打开 `demo/index.html`。
-
-![QueryPilot 查询结果](docs/assets/query-result.png)
+仓库通过产品截图展示主要页面；完整应用可按下方安装步骤在本地运行。
 
 ![QueryPilot 工作台](docs/assets/querypilot-workbench.png)
 
-离线页面使用固定的脱敏示例数据，只用于体验交互流程，不代表在线模型评测结果。
+![QueryPilot 查询结果](docs/assets/query-result.png)
+
+两张截图分别展示 QueryPilot 工作台和查询结果页面。完整应用可按下方步骤在本地运行。
 
 ## 当前包含的能力
 

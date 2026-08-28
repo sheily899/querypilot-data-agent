@@ -4,15 +4,15 @@
 
 QueryPilot is a natural-language data query agent for structured databases. It turns a business question into a read-only query and presents the result in a small web workbench.
 
-## Try the offline demo
+## Product screenshots
 
-No API key, database, or network is required: [open the interactive offline demo](https://htmlpreview.github.io/?https://github.com/sheily899/querypilot-data-agent/blob/main/demo/index.html) in a browser, or open `demo/index.html` after downloading the repository.
-
-![QueryPilot result view](docs/assets/query-result.png)
+The repository is documented with product screenshots; run the full application locally using the installation steps below.
 
 ![QueryPilot workbench](docs/assets/querypilot-workbench.png)
 
-The offline page uses fixed anonymized data and demonstrates the user flow only. It is not an online model benchmark.
+![QueryPilot result view](docs/assets/query-result.png)
+
+The screenshots show the QueryPilot workbench and query result view. The full application can be run locally with the steps below.
 
 ## What is included
 
