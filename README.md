@@ -10,6 +10,8 @@ No API key, database, or network is required: [open the interactive offline demo
 
 ![QueryPilot result view](docs/assets/query-result.png)
 
+![QueryPilot workbench](docs/assets/querypilot-workbench.png)
+
 The offline page uses fixed anonymized data and demonstrates the user flow only. It is not an online model benchmark.
 
 ## What is included

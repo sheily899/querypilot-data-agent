@@ -10,6 +10,8 @@ QueryPilot 面向结构化数据库，将业务人员的自然语言问题转换
 
 ![QueryPilot 查询结果](docs/assets/query-result.png)
 
+![QueryPilot 工作台](docs/assets/querypilot-workbench.png)
+
 离线页面使用固定的脱敏示例数据，只用于体验交互流程，不代表在线模型评测结果。
 
 ## 当前包含的能力
