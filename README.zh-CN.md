@@ -6,7 +6,7 @@ QueryPilot 面向结构化数据库，将业务人员的自然语言问题转换
 
 ## 先体验离线演示
 
-无需模型密钥、数据库或网络：[打开离线 Demo](demo/index.html)，即可用浏览器体验。
+无需模型密钥、数据库或网络：[打开可交互的离线 Demo](https://htmlpreview.github.io/?https://github.com/sheily899/querypilot-data-agent/blob/main/demo/index.html)，也可以下载仓库后直接打开 `demo/index.html`。
 
 ![QueryPilot 查询结果](docs/assets/query-result.png)
 
