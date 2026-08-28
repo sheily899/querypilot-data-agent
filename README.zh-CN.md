@@ -27,9 +27,41 @@ QueryPilot 面向结构化数据库，将业务人员的自然语言问题转换
 
 ## 核心架构与工作流
 
-![QueryPilot 系统架构](docs/assets/system-architecture.png)
+```mermaid
+flowchart LR
+  UI[Vue 3 工作台] --> API[FastAPI 接口]
+  API --> SVC[服务层]
+  SVC --> WF[查询工作流]
+  WF --> R{意图路由}
+  R -->|普通回答| D[直接回复]
+  R -->|已有结果| Q[结果问答]
+  R -->|新数据查询| RET[Schema 混合检索]
+  RET --> G[Schema 关系图]
+  G --> A[单库 Agent]
+  A --> M[MCP 工具]
+  M --> V[SQL 语法与权限校验]
+  V --> DB[DuckDB / CSV]
+  DB --> OUT[结果表 + SQL + 说明]
+```
 
-![QueryPilot 查询工作流](docs/assets/query-workflow.png)
+```mermaid
+stateDiagram-v2
+  [*] --> 预处理
+  预处理 --> 直接回复: 普通问题
+  预处理 --> 结果问答: 解读已有结果
+  预处理 --> 检索结构: 新数据查询
+  检索结构 --> 澄清: 信息不足
+  澄清 --> 检索结构: 用户补充
+  检索结构 --> 单库Agent: 上下文完整
+  单库Agent --> 澄清: 需要确认
+  单库Agent --> SQL校验: 生成查询
+  SQL校验 --> 执行: 通过
+  SQL校验 --> 结束: 拦截
+  执行 --> 结束
+  直接回复 --> 结束
+  结果问答 --> 结束
+  结束 --> [*]
+```
 
 请求链路为：**Vue 工作台 → FastAPI 接口 → 服务层 → 查询工作流 → 意图路由**。普通问答会进入直接回复或已有结果分析；新数据查询则继续经过结构检索、表关系构建、单库智能体、本地 MCP 工具、SQL 语法树与权限校验、数据库执行和结果展示。
 
