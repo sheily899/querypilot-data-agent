@@ -110,13 +110,13 @@ Open the URL printed by Vite. The full application calls the configured model se
 
 ## Evaluation snapshot
 
-The evidence-assisted run used 80 questions: 79 complete cases and one infrastructure-invalid case.
+The portfolio comparison uses the same 80-question evaluation set. The baseline run does not inject business evidence; the evidence-assisted run adds the official evidence field when available.
 
 | Metric | Result |
 |---|---:|
-| Final schema field recall | 82.97% |
+| Final schema field recall | 81.01% |
 | Final schema field precision | 31.04% |
-| Query execution accuracy | 53.16% (42/79) |
+| Query execution accuracy | 43.75% (35/80) → 53.75% (43/80) with evidence |
 | End-to-end latency, median | 57.67 s |
 | End-to-end latency, p95 | 92.94 s |
 
