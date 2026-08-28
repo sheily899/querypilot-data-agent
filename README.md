@@ -6,7 +6,7 @@ QueryPilot is a natural-language data query agent for structured databases. It t
 
 ## Try the offline demo
 
-No API key, database, or network is required: open `demo/index.html` in a browser.
+No API key, database, or network is required: [open the offline demo](demo/index.html) directly in a browser.
 
 ![QueryPilot result view](docs/assets/query-result.png)
 
