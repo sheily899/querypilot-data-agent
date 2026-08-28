@@ -61,6 +61,20 @@ The evidence-assisted run used 80 questions: 79 complete cases and one infrastru
 
 These figures are an engineering evaluation snapshot, not a production guarantee. Infrastructure failures are reported separately.
 
+## Privacy and security
+
+- The offline demo contains only fixed, anonymized example data and makes no network requests.
+- The application is designed for read-only, single-statement queries and checks table access and dangerous operations before execution.
+- Do not commit API keys, production exports, customer data, logs, or local database files. Use environment variables or a secret manager for credentials.
+- Before production use, add organization-specific authentication, authorization, audit retention, masking, and approval policies; the repository does not claim to provide those policies by default.
+
+## Next steps
+
+1. Add a deployable demo data package and a documented data-connection configuration.
+2. Expand evaluation with reproducible datasets, multi-turn cases, and independent infrastructure metrics.
+3. Strengthen schema relationship handling and SQL dialect compatibility across supported databases.
+4. Add deployment guidance, automated checks, and organization-specific access-control adapters.
+
 ## Repository scope
 
 This repository contains the runnable product core and a self-contained UI demo. Internal benchmark datasets, traces, temporary diagnosis scripts, local databases, logs and secrets are excluded.
