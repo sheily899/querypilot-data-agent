@@ -74,7 +74,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite. The full application calls the configured model service; the offline demo does not.
+Open the URL printed by Vite. The full application calls the configured model service.
 
 ## Evaluation snapshot
 
@@ -92,7 +92,7 @@ These figures are an engineering evaluation snapshot, not a production guarantee
 
 ## Privacy and security
 
-- The offline demo contains only fixed, anonymized example data and makes no network requests.
+- Screenshots and evaluation materials in this repository are sanitized; no production data is included.
 - The application is designed for read-only, single-statement queries and checks table access and dangerous operations before execution.
 - Do not commit API keys, production exports, customer data, logs, or local database files. Use environment variables or a secret manager for credentials.
 - Before production use, add organization-specific authentication, authorization, audit retention, masking, and approval policies; the repository does not claim to provide those policies by default.
