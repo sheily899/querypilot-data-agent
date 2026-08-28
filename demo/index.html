@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QueryPilot 离线演示</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:#27352f;background:#fbf7ed}body{max-width:960px;margin:0 auto;padding:32px 20px}h1{color:#c9911d}section{background:#fff;border:1px solid #ead9af;border-radius:14px;padding:20px;margin:18px 0}textarea{width:100%;min-height:70px;border:1px solid #ddc98f;border-radius:8px;padding:10px;box-sizing:border-box}button{background:#d9a52d;color:#fff;border:0;border-radius:8px;padding:10px 18px;margin-top:10px;cursor:pointer}.meta{color:#68746c;font-size:14px}table{width:100%;border-collapse:collapse;margin-top:14px}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}code{background:#f5efd9;padding:2px 5px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <h1>QueryPilot</h1><p>结构化数据自然语言查询 · 离线演示</p>
+  <section><h2>试着提问</h2><textarea id="q">查询本月各地区的销售额</textarea><br><button onclick="run()">查询</button><p id="status" class="meta">无需 API Key，不会访问网络。</p></section>
+  <section id="result"><h2>示例结果</h2><p class="meta">模拟查询：销售地区 × 销售额</p><table><thead><tr><th>销售地区</th><th>销售额</th></tr></thead><tbody id="rows"></tbody></table><p id="explain" class="meta"></p></section>
+  <section><h2>运行链路</h2><p>问题理解 → 字段定位 → 表关系分析 → 查询生成 → 只读校验 → 结果展示</p><p class="meta">本页使用固定脱敏数据，仅用于体验界面和交互，不代表在线模型评测结果。</p></section>
+  <script>
+    const data=[['西南','¥4,474,287.06'],['华东','¥4,292,183.75'],['华南','¥3,513,112.52'],['华北','¥3,379,043.36']];
+    function run(){document.querySelector('#rows').innerHTML=data.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');document.querySelector('#status').textContent='已完成离线模拟查询';document.querySelector('#explain').textContent='示例说明：西南地区销售额最高。';}
+    run();
+  </script>
+</body></html>
