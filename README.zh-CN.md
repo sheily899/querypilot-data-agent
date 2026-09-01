@@ -46,21 +46,31 @@ flowchart LR
 
 ```mermaid
 stateDiagram-v2
-  [*] --> 预处理
-  预处理 --> 直接回复: 普通问题
-  预处理 --> 结果问答: 解读已有结果
-  预处理 --> 检索结构: 新数据查询
-  检索结构 --> 澄清: 信息不足
-  澄清 --> 检索结构: 用户补充
-  检索结构 --> 单库Agent: 上下文完整
-  单库Agent --> 澄清: 需要确认
-  单库Agent --> SQL校验: 生成查询
-  SQL校验 --> 执行: 通过
-  SQL校验 --> 结束: 拦截
-  执行 --> 结束
-  直接回复 --> 结束
-  结果问答 --> 结束
-  结束 --> [*]
+  state "预处理" as preprocess
+  state "直接回复" as direct_reply
+  state "结果问答" as result_qa
+  state "检索结构" as retrieve_schema
+  state "澄清" as clarify
+  state "单库 Agent" as single_db_agent
+  state "SQL 校验" as validate_sql
+  state "执行" as execute
+  state "结束" as finish
+
+  [*] --> preprocess
+  preprocess --> direct_reply: 普通问题
+  preprocess --> result_qa: 解读已有结果
+  preprocess --> retrieve_schema: 新数据查询
+  retrieve_schema --> clarify: 信息不足
+  clarify --> retrieve_schema: 用户补充
+  retrieve_schema --> single_db_agent: 上下文完整
+  single_db_agent --> clarify: 需要确认
+  single_db_agent --> validate_sql: 生成查询
+  validate_sql --> execute: 通过
+  validate_sql --> finish: 拦截
+  execute --> finish
+  direct_reply --> finish
+  result_qa --> finish
+  finish --> [*]
 ```
 
 请求链路为：**Vue 工作台 → FastAPI 接口 → 服务层 → 查询工作流 → 意图路由**。普通问答会进入直接回复或已有结果分析；新数据查询则继续经过结构检索、表关系构建、单库智能体、本地 MCP 工具、SQL 语法树与权限校验、数据库执行和结果展示。
